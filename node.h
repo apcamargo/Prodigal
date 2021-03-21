@@ -90,11 +90,11 @@ void score_nodes(unsigned char *, unsigned char *, int, struct _node *, int,
                  struct _training *, int, int);
 void raw_coding_score(unsigned char *, unsigned char *, int, struct _node *,
                       int, struct _training *);
-void calc_orf_gc(unsigned char *, unsigned char *, int, struct _node *, int, 
+void calc_orf_gc(unsigned char *, unsigned char *, int, struct _node *, int,
                  struct _training *);
 void rbs_score(unsigned char *, unsigned char *, int, struct _node *, int,
                struct _training *);
-void score_upstream_composition(unsigned char *, int, struct _node *, 
+void score_upstream_composition(unsigned char *, int, struct _node *,
                                 struct _training *);
 
 void determine_sd_usage(struct _training *);
@@ -106,7 +106,7 @@ void train_starts_sd(unsigned char *, unsigned char *, int, struct _node *,
 void train_starts_nonsd(unsigned char *, unsigned char *, int, struct _node *,
                         int, struct _training *);
 
-void count_upstream_composition(unsigned char *, int, int, int, 
+void count_upstream_composition(unsigned char *, int, int, int,
                                 struct _training *);
 
 void build_coverage_map(double [4][4][4096], int [4][4][4096], double, int);

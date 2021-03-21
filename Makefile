@@ -44,13 +44,13 @@ $(TARGET): $(OBJECTS)
 install: $(TARGET)
 	install -d -m 0755 $(INSTALLDIR)
 	install -m 0755 $(TARGET) $(INSTALLDIR)
- 
+
 uninstall:
 	-rm $(INSTALLDIR)/$(TARGET)
 
 clean:
 	-rm -f $(OBJECTS) $(ZOBJECTS)
- 
+
 distclean: clean
 	-rm -f $(TARGET)
 

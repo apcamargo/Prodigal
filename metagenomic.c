@@ -22,7 +22,7 @@
 
 /*******************************************************************************
   Initialize the metagenomic bins with the precalculated training files
-  from the model organisms that best represent all of microbial Genbank.  
+  from the model organisms that best represent all of microbial Genbank.
 *******************************************************************************/
 void initialize_metagenomic_bins(struct _metagenomic_bin *meta) {
   initialize_metagenome_0(meta[0].tinf);

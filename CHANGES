@@ -96,9 +96,9 @@ should help in identifying fragmented genes in draft or metagenomic data.
 * Added more detailed information to the starts file, including ATG/GTG/TTG
 usage, the RBS bin and spacer distance, and the new upstream composition
 score.
-* Added a '-n' option to force the program not to use the SD motif finder.  
-(This can be useful if you suspect the organism uses a motif like AAGAGG and 
-you would like to get to the AAG/etc. motifs which will be missed by the SD 
+* Added a '-n' option to force the program not to use the SD motif finder.
+(This can be useful if you suspect the organism uses a motif like AAGAGG and
+you would like to get to the AAG/etc. motifs which will be missed by the SD
 finder.  It is also useful to get very specific RBS motifs and spacers in
 the starts file).
 * Added gene.c/h files containing a data structure for final gene models

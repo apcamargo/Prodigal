@@ -70,7 +70,7 @@ int add_genes(struct _gene *glist, struct _node *nod, int dbeg) {
   to whatever start we initially chose.
 
   This routine was tested on numerous genomes and found to increase overall
-  performance. 
+  performance.
 *******************************************************************************/
 void tweak_final_starts(struct _gene *genes, int ng, struct _node *nod,
                         int nn, struct _training *tinf) {
@@ -85,10 +85,10 @@ void tweak_final_starts(struct _gene *genes, int ng, struct _node *nod,
       igm = intergenic_mod(&nod[genes[i-1].stop_ndx], &nod[ndx], tinf);
     if(i > 0 && nod[ndx].strand == 1 && nod[genes[i-1].start_ndx].strand == -1)
       igm = intergenic_mod(&nod[genes[i-1].start_ndx], &nod[ndx], tinf);
-    if(i < ng-1 && nod[ndx].strand == -1 && nod[genes[i+1].start_ndx].strand 
+    if(i < ng-1 && nod[ndx].strand == -1 && nod[genes[i+1].start_ndx].strand
        == 1)
       igm = intergenic_mod(&nod[ndx], &nod[genes[i+1].start_ndx], tinf);
-    if(i < ng-1 && nod[ndx].strand == -1 && nod[genes[i+1].start_ndx].strand 
+    if(i < ng-1 && nod[ndx].strand == -1 && nod[genes[i+1].start_ndx].strand
        == -1)
       igm = intergenic_mod(&nod[ndx], &nod[genes[i+1].stop_ndx], tinf);
 
@@ -111,17 +111,17 @@ void tweak_final_starts(struct _gene *genes, int ng, struct _node *nod,
         if(nod[genes[i-1].start_ndx].ndx - nod[j].ndx >= 0) continue;
         tigm = intergenic_mod(&nod[genes[i-1].start_ndx], &nod[j], tinf);
       }
-      if(i < ng-1 && nod[j].strand == -1 && nod[genes[i+1].start_ndx].strand 
+      if(i < ng-1 && nod[j].strand == -1 && nod[genes[i+1].start_ndx].strand
          == 1) {
         if(nod[j].ndx - nod[genes[i+1].start_ndx].ndx >= 0) continue;
         tigm = intergenic_mod(&nod[j], &nod[genes[i+1].start_ndx], tinf);
       }
-      if(i < ng-1 && nod[j].strand == -1 && nod[genes[i+1].start_ndx].strand 
+      if(i < ng-1 && nod[j].strand == -1 && nod[genes[i+1].start_ndx].strand
          == -1) {
         if(nod[j].ndx - nod[genes[i+1].stop_ndx].ndx > MAX_SAM_OVLP) continue;
         tigm = intergenic_mod(&nod[j], &nod[genes[i+1].stop_ndx], tinf);
       }
- 
+
       if(maxndx[0] == -1) {
         maxndx[0] = j;
         maxsc[0] = nod[j].cscore + nod[j].sscore;
@@ -135,8 +135,8 @@ void tweak_final_starts(struct _gene *genes, int ng, struct _node *nod,
         maxsc[0] = nod[j].cscore + nod[j].sscore;
         maxigm[0] = tigm;
       }
-      else if(maxndx[1] == -1 || nod[j].cscore + nod[j].sscore + tigm > 
-              maxsc[1]) { 
+      else if(maxndx[1] == -1 || nod[j].cscore + nod[j].sscore + tigm >
+              maxsc[1]) {
         maxndx[1] = j;
         maxsc[1] = nod[j].cscore + nod[j].sscore;
         maxigm[1] = tigm;
@@ -151,9 +151,9 @@ void tweak_final_starts(struct _gene *genes, int ng, struct _node *nod,
 
       /* Start of less common type but with better coding, rbs, and */
       /* upstream.  Must be 18 or more bases away from original.    */
-      if(nod[mndx].tscore < nod[ndx].tscore && maxsc[j]-nod[mndx].tscore >= 
+      if(nod[mndx].tscore < nod[ndx].tscore && maxsc[j]-nod[mndx].tscore >=
          sc-nod[ndx].tscore+tinf->st_wt && nod[mndx].rscore > nod[ndx].rscore
-         && nod[mndx].uscore > nod[ndx].uscore && nod[mndx].cscore > 
+         && nod[mndx].uscore > nod[ndx].uscore && nod[mndx].cscore >
          nod[ndx].cscore && abs(nod[mndx].ndx-nod[ndx].ndx) > 15) {
         maxsc[j] += nod[ndx].tscore-nod[mndx].tscore;
       }
@@ -163,13 +163,13 @@ void tweak_final_starts(struct _gene *genes, int ng, struct _node *nod,
       else if(abs(nod[mndx].ndx-nod[ndx].ndx) <= 15 && nod[mndx].rscore+
               nod[mndx].tscore > nod[ndx].rscore+nod[ndx].tscore &&
               nod[ndx].edge == 0 && nod[mndx].edge == 0) {
-        if(nod[ndx].cscore > nod[mndx].cscore) 
+        if(nod[ndx].cscore > nod[mndx].cscore)
           maxsc[j] += nod[ndx].cscore - nod[mndx].cscore;
-        if(nod[ndx].uscore > nod[mndx].uscore) 
+        if(nod[ndx].uscore > nod[mndx].uscore)
           maxsc[j] += nod[ndx].uscore - nod[mndx].uscore;
-        if(igm > maxigm[j]) maxsc[j] += igm - maxigm[j]; 
+        if(igm > maxigm[j]) maxsc[j] += igm - maxigm[j];
       }
-  
+
       else maxsc[j] = -1000.0;
     }
 
@@ -180,16 +180,16 @@ void tweak_final_starts(struct _gene *genes, int ng, struct _node *nod,
       if(mndx == -1 && maxsc[j]+maxigm[j] > sc+igm)
         mndx = j;
       else if(mndx >= 0 && maxsc[j]+maxigm[j] > maxsc[mndx]+maxigm[mndx])
-        mndx = j; 
+        mndx = j;
     }
     if(mndx != -1 && nod[maxndx[mndx]].strand == 1) {
       genes[i].start_ndx = maxndx[mndx];
       genes[i].begin = nod[maxndx[mndx]].ndx+1;
-    } 
+    }
     else if(mndx != -1 && nod[maxndx[mndx]].strand == -1) {
       genes[i].start_ndx = maxndx[mndx];
       genes[i].end = nod[maxndx[mndx]].ndx+1;
-    } 
+    }
   }
 }
 
@@ -277,7 +277,7 @@ void record_gene_data(struct _gene *genes, int ng, struct _node *nod,
     if(nod[ndx].edge == 1) st_type = 3;
     else st_type = nod[ndx].type;
 
-    sprintf(genes[i].gene_data, "ID=%d_%d;partial=%d%d;start_type=%s;", sctr, 
+    sprintf(genes[i].gene_data, "ID=%d_%d;partial=%d%d;start_type=%s;", sctr,
             i+1, partial_left, partial_right, type_string[st_type]);
 
     /* Record rbs data */
@@ -322,11 +322,11 @@ void record_gene_data(struct _gene *genes, int ng, struct _node *nod,
     strcat(genes[i].gene_data, buffer);
 
     /* Record score data */
-    confidence = calculate_confidence(nod[ndx].cscore + nod[ndx].sscore, 
+    confidence = calculate_confidence(nod[ndx].cscore + nod[ndx].sscore,
                                       tinf->st_wt);
-    sprintf(genes[i].score_data, 
+    sprintf(genes[i].score_data,
      "conf=%.2f;score=%.2f;cscore=%.2f;sscore=%.2f;rscore=%.2f;uscore=%.2f;",
-     confidence, nod[ndx].cscore+nod[ndx].sscore,nod[ndx].cscore, 
+     confidence, nod[ndx].cscore+nod[ndx].sscore,nod[ndx].cscore,
      nod[ndx].sscore, nod[ndx].rscore, nod[ndx].uscore);
 
     sprintf(buffer, "tscore=%.2f;", nod[ndx].tscore);
@@ -336,7 +336,7 @@ void record_gene_data(struct _gene *genes, int ng, struct _node *nod,
 }
 
 /* Print the genes.  'Flag' indicates which format to use. */
-void print_genes(FILE *fp, struct _gene *genes, int ng, struct _node *nod, 
+void print_genes(FILE *fp, struct _gene *genes, int ng, struct _node *nod,
                  int slen, int flag, int sctr, int is_meta, char *mdesc,
                  struct _training *tinf, char *header, char *short_hdr,
                  char *version) {
@@ -377,7 +377,7 @@ void print_genes(FILE *fp, struct _gene *genes, int ng, struct _node *nod,
     fprintf(fp, "# Sequence Data: %s\n", seq_data);
     fprintf(fp, "# Model Data: %s\n", run_data);
   }
-  
+
   /* Print the genes */
   for(i = 0; i < ng; i++) {
     ndx = genes[i].start_ndx;
@@ -400,14 +400,14 @@ void print_genes(FILE *fp, struct _gene *genes, int ng, struct _node *nod,
       if(flag == 1)
         fprintf(fp, "gene_prodigal=%d|1|f|y|y|3|0|%d|%d|%d|%d|-1|-1|1.0\n", i+1,
                 genes[i].begin, genes[i].end, genes[i].begin, genes[i].end);
-      if(flag == 2) fprintf(fp, ">%d_%d_%d_+\n", i+1, genes[i].begin, 
+      if(flag == 2) fprintf(fp, ">%d_%d_%d_+\n", i+1, genes[i].begin,
                             genes[i].end);
       if(flag == 3) {
-        fprintf(fp, "%s\tProdigal_v%s\tCDS\t%d\t%d\t%.1f\t+\t0\t%s;%s", 
-                short_hdr, version, genes[i].begin, genes[i].end, 
+        fprintf(fp, "%s\tProdigal_v%s\tCDS\t%d\t%d\t%.1f\t+\t0\t%s;%s",
+                short_hdr, version, genes[i].begin, genes[i].end,
                 nod[ndx].cscore+nod[ndx].sscore, genes[i].gene_data,
                 genes[i].score_data);
-        fprintf(fp, "\n"); 
+        fprintf(fp, "\n");
       }
     }
     else {
@@ -427,14 +427,14 @@ void print_genes(FILE *fp, struct _gene *genes, int ng, struct _node *nod,
         fprintf(fp, "gene_prodigal=%d|1|r|y|y|3|0|%d|%d|%d|%d|-1|-1|1.0\n", i+1,
                slen+1-genes[i].end, slen+1-genes[i].begin,
                slen+1-genes[i].end, slen+1-genes[i].begin);
-      if(flag == 2) fprintf(fp, ">%d_%d_%d_-\n", i+1, genes[i].begin, 
+      if(flag == 2) fprintf(fp, ">%d_%d_%d_-\n", i+1, genes[i].begin,
                             genes[i].end);
       if(flag == 3) {
         fprintf(fp, "%s\tProdigal_v%s\tCDS\t%d\t%d\t%.1f\t-\t0\t%s;%s",
-                short_hdr, version, genes[i].begin, genes[i].end, 
+                short_hdr, version, genes[i].begin, genes[i].end,
                 nod[ndx].cscore+nod[ndx].sscore, genes[i].gene_data,
                 genes[i].score_data);
-        fprintf(fp, "\n"); 
+        fprintf(fp, "\n");
       }
     }
   }
@@ -445,8 +445,8 @@ void print_genes(FILE *fp, struct _gene *genes, int ng, struct _node *nod,
 }
 
 /* Print the gene translations */
-void write_translations(FILE *fh, struct _gene *genes, int ng, struct 
-                        _node *nod, unsigned char *seq, unsigned char *rseq, 
+void write_translations(FILE *fh, struct _gene *genes, int ng, struct
+                        _node *nod, unsigned char *seq, unsigned char *rseq,
                         unsigned char *useq, int slen, struct _training *tinf,
                         int sctr, char *short_hdr) {
   int i, j;
@@ -456,7 +456,7 @@ void write_translations(FILE *fh, struct _gene *genes, int ng, struct
       fprintf(fh, ">%s_%d # %d # %d # 1 # %s\n", short_hdr, i+1,
               genes[i].begin, genes[i].end, genes[i].gene_data);
       for(j = genes[i].begin; j < genes[i].end; j+=3) {
-        if(is_n(useq, j-1) == 1 || is_n(useq, j) == 1 || is_n(useq, j+1) == 1) 
+        if(is_n(useq, j-1) == 1 || is_n(useq, j) == 1 || is_n(useq, j+1) == 1)
           fprintf(fh, "X");
         else fprintf(fh, "%c", amino(seq, j-1, tinf, (j==genes[i].begin?1:0) &&
                      (1-nod[genes[i].start_ndx].edge)));
@@ -481,9 +481,9 @@ void write_translations(FILE *fh, struct _gene *genes, int ng, struct
 }
 
 /* Print the gene nucleotide sequences */
-void write_nucleotide_seqs(FILE *fh, struct _gene *genes, int ng, struct 
+void write_nucleotide_seqs(FILE *fh, struct _gene *genes, int ng, struct
                            _node *nod, unsigned char *seq, unsigned char *rseq,
-                           unsigned char *useq, int slen, struct _training 
+                           unsigned char *useq, int slen, struct _training
                            *tinf, int sctr, char *short_hdr) {
   int i, j;
 
@@ -508,7 +508,7 @@ void write_nucleotide_seqs(FILE *fh, struct _gene *genes, int ng, struct
         if(is_a(rseq, j) == 1) fprintf(fh, "A");
         else if(is_t(rseq, j) == 1) fprintf(fh, "T");
         else if(is_g(rseq, j) == 1) fprintf(fh, "G");
-        else if(is_c(rseq, j) == 1 && is_n(useq, slen-1-j) == 0) 
+        else if(is_c(rseq, j) == 1 && is_n(useq, slen-1-j) == 0)
           fprintf(fh, "C");
         else fprintf(fh, "N");
         if((j-slen+genes[i].end)%70 == 69) fprintf(fh, "\n");

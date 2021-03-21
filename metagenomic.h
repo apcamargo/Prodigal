@@ -43,7 +43,7 @@ struct _metagenomic_bin {
 };
 
 void initialize_metagenomic_bins(struct _metagenomic_bin *);
-double score_edges(unsigned char *, unsigned char *, int, 
+double score_edges(unsigned char *, unsigned char *, int,
                    struct _training *tinf);
 double score_sample(unsigned char *, unsigned char *, int, int, int, struct
                     _training *tinf);
