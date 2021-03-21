@@ -28,8 +28,7 @@
 
 struct _training {
   double gc;                    /* GC Content */
-  int trans_table;              /* 11 = Standard Microbial, NCBI Trans Table to
-                                   use */
+  int trans_table;              /* 1 = Standard Microbial, Trans Table to use */
   double st_wt;                 /* Start weight */
   double bias[3];               /* GC frame bias for each of the 3 positions */
   double type_wt[3];            /* Weights for ATG vs GTG vs TTG */

@@ -289,39 +289,24 @@ int is_stop(unsigned char *seq, int n, struct _training *tinf) {
 
   /* TAG */
   if(is_t(seq, n) == 1 && is_a(seq, n+1) == 1 && is_g(seq, n+2) == 1) {
-    if(tinf->trans_table == 6 || tinf->trans_table == 15 ||
-       tinf->trans_table == 16 || tinf->trans_table == 22) return 0;
+    if(tinf->trans_table == 2 || tinf->trans_table == 5 ||
+       tinf->trans_table == 6) return 0;
     return 1;
   }
 
   /* TGA */
   if(is_t(seq, n) == 1 && is_g(seq, n+1) == 1 && is_a(seq, n+2) == 1) {
-    if((tinf->trans_table >= 2 && tinf->trans_table <= 5) ||
-       tinf->trans_table == 9 || tinf->trans_table == 10 ||
-       tinf->trans_table == 13 || tinf->trans_table == 14 ||
-       tinf->trans_table == 21 || tinf->trans_table == 25) return 0;
+    if(tinf->trans_table == 4 || tinf->trans_table == 6 ||
+       tinf->trans_table == 7) return 0;
     return 1;
   }
 
   /* TAA */
   if(is_t(seq, n) == 1 && is_a(seq, n+1) == 1 && is_a(seq, n+2) == 1) {
-    if(tinf->trans_table == 6 || tinf->trans_table == 14) return 0;
+    if(tinf->trans_table == 3 || tinf->trans_table == 5 ||
+       tinf->trans_table == 7) return 0;
     return 1;
   }
-
-  /* Code 2 */
-  if(tinf->trans_table == 2 && is_a(seq, n) == 1 && is_g(seq, n+1) == 1 &&
-     is_a(seq, n+2) == 1) return 1;
-  if(tinf->trans_table == 2 && is_a(seq, n) == 1 && is_g(seq, n+1) == 1 &&
-     is_g(seq, n+2) == 1) return 1;
-
-  /* Code 22 */
-  if(tinf->trans_table == 22 && is_t(seq, n) == 1 && is_c(seq, n+1) == 1 &&
-     is_a(seq, n+2) == 1) return 1;
-
-  /* Code 23 */
-  if(tinf->trans_table == 23 && is_t(seq, n) == 1 && is_t(seq, n+1) == 1 &&
-     is_a(seq, n+2) == 1) return 1;
 
   return 0;
 }
@@ -331,22 +316,13 @@ int is_start(unsigned char *seq, int n, struct _training *tinf) {
   /* ATG */
   if(is_a(seq, n) == 1 && is_t(seq, n+1) == 1 && is_g(seq, n+2) == 1) return 1;
 
-  /* Codes that only use ATG */
-  if(tinf->trans_table == 6 || tinf->trans_table == 10 ||
-     tinf->trans_table == 14 || tinf->trans_table == 15 ||
-     tinf->trans_table == 16 || tinf->trans_table == 22) return 0;
-
   /* GTG */
   if(is_g(seq, n) == 1 && is_t(seq, n+1) == 1 && is_g(seq, n+2) == 1) {
-    if(tinf->trans_table == 1 || tinf->trans_table == 3 ||
-       tinf->trans_table == 12 || tinf->trans_table == 22) return 0;
     return 1;
   }
 
   /* TTG */
   if(is_t(seq, n) == 1 && is_t(seq, n+1) == 1 && is_g(seq, n+2) == 1) {
-    if(tinf->trans_table < 4 || tinf->trans_table == 9 ||
-       (tinf->trans_table >= 21 && tinf->trans_table < 25)) return 0;
     return 1;
   }
 
@@ -402,41 +378,19 @@ char amino(unsigned char *seq, int n, struct _training *tinf, int is_init) {
     return 'Y';
   if(is_t(seq, n) == 1 && is_a(seq, n+1) == 1 && is_c(seq, n+2) == 1)
     return 'Y';
-  if(is_t(seq, n) == 1 && is_a(seq, n+1) == 1 && is_a(seq, n+2) == 1) {
-    if(tinf->trans_table == 6) return 'Q';
-    if(tinf->trans_table == 14) return 'Y';
-  }
-  if(is_t(seq, n) == 1 && is_a(seq, n+1) == 1 && is_g(seq, n+2) == 1) {
-    if(tinf->trans_table == 6 || tinf->trans_table == 15) return 'Q';
-    if(tinf->trans_table == 22) return 'L';
-  }
+  if(is_t(seq, n) == 1 && is_a(seq, n+1) == 1 && is_a(seq, n+2) == 1)
+    return 'X';
+  if(is_t(seq, n) == 1 && is_a(seq, n+1) == 1 && is_g(seq, n+2) == 1)
+    return 'X';
   if(is_t(seq, n) == 1 && is_g(seq, n+1) == 1 && is_t(seq, n+2) == 1)
     return 'C';
   if(is_t(seq, n) == 1 && is_g(seq, n+1) == 1 && is_c(seq, n+2) == 1)
     return 'C';
-  if(is_t(seq, n) == 1 && is_g(seq, n+1) == 1 && is_a(seq, n+2) == 1) {
-    if(tinf->trans_table == 25) return 'G';
-    else return 'W';
-  }
+  if(is_t(seq, n) == 1 && is_g(seq, n+1) == 1 && is_a(seq, n+2) == 1)
+    return 'X';
   if(is_t(seq, n) == 1 && is_g(seq, n+1) == 1 && is_g(seq, n+2) == 1)
     return 'W';
-  if(is_c(seq, n) == 1 && is_t(seq, n+1) == 1 && is_t(seq, n+2) == 1) {
-    if(tinf->trans_table == 3) return 'T';
-    return 'L';
-  }
-  if(is_c(seq, n) == 1 && is_t(seq, n+1) == 1 && is_c(seq, n+2) == 1) {
-    if(tinf->trans_table == 3) return 'T';
-    return 'L';
-  }
-  if(is_c(seq, n) == 1 && is_t(seq, n+1) == 1 && is_a(seq, n+2) == 1) {
-    if(tinf->trans_table == 3) return 'T';
-    return 'L';
-  }
-  if(is_c(seq, n) == 1 && is_t(seq, n+1) == 1 && is_g(seq, n+2) == 1) {
-    if(tinf->trans_table == 3) return 'T';
-    if(tinf->trans_table == 12) return 'S';
-    return 'L';
-  }
+  if(is_c(seq, n) == 1 && is_t(seq, n+1)) return 'L';
   if(is_c(seq, n) == 1 && is_c(seq, n+1) == 1) return 'P';
   if(is_c(seq, n) == 1 && is_a(seq, n+1) == 1 && is_t(seq, n+2) == 1)
     return 'H';
@@ -451,12 +405,8 @@ char amino(unsigned char *seq, int n, struct _training *tinf, int is_init) {
     return 'I';
   if(is_a(seq, n) == 1 && is_t(seq, n+1) == 1 && is_c(seq, n+2) == 1)
     return 'I';
-  if(is_a(seq, n) == 1 && is_t(seq, n+1) == 1 && is_a(seq, n+2) == 1) {
-    if(tinf->trans_table == 2 || tinf->trans_table == 3 ||
-       tinf->trans_table == 5 || tinf->trans_table == 13 ||
-       tinf->trans_table == 21) return 'M';
+  if(is_a(seq, n) == 1 && is_t(seq, n+1) == 1 && is_a(seq, n+2) == 1)
     return 'I';
-  }
   if(is_a(seq, n) == 1 && is_t(seq, n+1) == 1 && is_g(seq, n+2) == 1)
     return 'M';
   if(is_a(seq, n) == 1 && is_c(seq, n+1) == 1) return 'T';
@@ -464,11 +414,8 @@ char amino(unsigned char *seq, int n, struct _training *tinf, int is_init) {
     return 'N';
   if(is_a(seq, n) == 1 && is_a(seq, n+1) == 1 && is_c(seq, n+2) == 1)
     return 'N';
-  if(is_a(seq, n) == 1 && is_a(seq, n+1) == 1 && is_a(seq, n+2) == 1) {
-    if(tinf->trans_table == 9 || tinf->trans_table == 14 ||
-       tinf->trans_table == 21) return 'N';
+  if(is_a(seq, n) == 1 && is_a(seq, n+1) == 1 && is_a(seq, n+2) == 1)
     return 'K';
-  }
   if(is_a(seq, n) == 1 && is_a(seq, n+1) == 1 && is_g(seq, n+2) == 1)
     return 'K';
   if(is_a(seq, n) == 1 && is_g(seq, n+1) == 1 && is_t(seq, n+2) == 1)
@@ -476,12 +423,8 @@ char amino(unsigned char *seq, int n, struct _training *tinf, int is_init) {
   if(is_a(seq, n) == 1 && is_g(seq, n+1) == 1 && is_c(seq, n+2) == 1)
     return 'S';
   if(is_a(seq, n) == 1 && is_g(seq, n+1) == 1 && (is_a(seq, n+2) == 1 ||
-     is_g(seq, n+2) == 1)) {
-    if(tinf->trans_table == 13) return 'G';
-    if(tinf->trans_table == 5 || tinf->trans_table == 9 ||
-       tinf->trans_table == 14 || tinf->trans_table == 21) return 'S';
+     is_g(seq, n+2) == 1))
     return 'R';
-  }
   if(is_g(seq, n) == 1 && is_t(seq, n+1) == 1) return 'V';
   if(is_g(seq, n) == 1 && is_c(seq, n+1) == 1) return 'A';
   if(is_g(seq, n) == 1 && is_a(seq, n+1) == 1 && is_t(seq, n+2) == 1)

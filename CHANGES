@@ -1,3 +1,8 @@
+STOP CODON READTHROUGH FORK
+
+* Replaces NCBI's genetic codes with multiple custom genetic codes containing
+stop codon readthroughs.
+
 VERSION 2.6.3
 
 * Fixed a bug in protein translation output of partial genes where TTG/GTG

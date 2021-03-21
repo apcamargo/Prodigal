@@ -1,6 +1,7 @@
-# Prodigal
+# Prodigal (stop codon readthrough fork)
 
-  Fast, reliable protein-coding gene prediction for prokaryotic genomes.
+Fork of the [Prodigal](https://github.com/hyattpd/Prodigal) gene calling tool
+that replaces NCBI's genetic codes with with multiple custom genetic codes containing stop codon readthroughs.
 
 ```bash
 prodigal -i my.genome.fna -o my.genes -a my.proteins.faa
@@ -8,9 +9,17 @@ prodigal -i my.metagenome.fna -o my.genes -a my.proteins.faa -p meta
 prodigal -h
 ```
 
-### New in 2.6.3 (February 2016)
-  * Fixed a bug in protein translation output of partial genes where TTG/GTG
-codons were being incorrectly translated to methionine.
+### List of genetic codes
+
+```
+1: Standard (equivalent to NCBI's standard microbial code)
+2: Skips TAG
+3: Skips TAA
+4: Skips TGA
+5: Skips TAG and TAA
+6: Skips TAG and TGA
+7: Skips TAA and TGA
+```
 
 ### Getting Started
 

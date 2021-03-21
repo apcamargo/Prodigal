@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
     for 99% of genomes.  This problem may be revisited in future versions.
   ***************************************************************************/
   tinf.st_wt = 4.35;
-  tinf.trans_table = 11;
+  tinf.trans_table = 1;
 
   /* Parse the command line arguments */
   for(i = 1; i < argc; i++) {
@@ -158,9 +158,7 @@ int main(int argc, char *argv[]) {
     }
     else if(strcmp(argv[i], "-g") == 0 || strcmp(argv[i], "-G") == 0) {
       tinf.trans_table = atoi(argv[i+1]);
-      if(tinf.trans_table < 1 || tinf.trans_table > 25 || tinf.trans_table == 7
-         || tinf.trans_table == 8 || (tinf.trans_table >= 17 && tinf.trans_table
-         <= 20))
+      if(tinf.trans_table < 1 || tinf.trans_table > 7)
         usage("Invalid translation table specified.");
       user_tt = tinf.trans_table;
       i++;
@@ -666,7 +664,7 @@ void help() {
   fprintf(stderr, "         -f:  Select output format (gbk, gff, or sco).  ");
   fprintf(stderr, "Default is gbk.\n");
   fprintf(stderr, "         -g:  Specify a translation table to use (default");
-  fprintf(stderr, " 11).\n");
+  fprintf(stderr, " 1).\n");
   fprintf(stderr, "         -h:  Print help menu and exit.\n");
   fprintf(stderr, "         -i:  Specify FASTA/Genbank input file (default ");
   fprintf(stderr, "reads from stdin).\n");

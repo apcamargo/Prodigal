@@ -572,9 +572,21 @@ void raw_coding_score(unsigned char *seq, unsigned char *rseq, int slen, struct
   int i, j, last[3], fr;
   double score[3], lfac, no_stop, gsize = 0.0;
 
-  if(tinf->trans_table != 11) { /* TGA or TAG is not a stop */
+  if(tinf->trans_table == 6) { /* (TGA and TAG) are not stop */
+    no_stop = ((1-tinf->gc)*(1-tinf->gc)*(1-tinf->gc))/8.0;
+    no_stop = (1 - no_stop);
+  }
+  else if(tinf->trans_table == 3) { /* TAA is not a stop */
+    no_stop = ((1-tinf->gc)*(1-tinf->gc)*tinf->gc)/4.0;
+    no_stop = (1 - no_stop);
+  }
+  else if(tinf->trans_table == 2 || tinf->trans_table == 4) { /* (TGA or TAG) is not a stop */
     no_stop = ((1-tinf->gc)*(1-tinf->gc)*tinf->gc)/8.0;
     no_stop += ((1-tinf->gc)*(1-tinf->gc)*(1-tinf->gc))/8.0;
+    no_stop = (1 - no_stop);
+  }
+  else if(tinf->trans_table == 5 || tinf->trans_table == 7) { /* (TGA or TAG) and TAA are not stop*/
+    no_stop = ((1-tinf->gc)*(1-tinf->gc)*tinf->gc)/8.0;
     no_stop = (1 - no_stop);
   }
   else {
