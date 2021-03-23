@@ -4,9 +4,9 @@ Fork of the [Prodigal](https://github.com/hyattpd/Prodigal) gene calling tool
 that replaces NCBI's genetic codes with with multiple custom genetic codes containing stop codon readthroughs.
 
 ```bash
-prodigal -i my.genome.fna -o my.genes -a my.proteins.faa
-prodigal -i my.metagenome.fna -o my.genes -a my.proteins.faa -p meta
-prodigal -h
+prodigal-sc -i my.genome.fna -o my.genes -a my.proteins.faa
+prodigal-sc -i my.metagenome.fna -o my.genes -a my.proteins.faa -g 3 # skips TGA
+prodigal-sc -h
 ```
 
 ### List of genetic codes
@@ -34,7 +34,7 @@ $ make install
   To see a complete list of options:
 
 ```bash
-$ prodigal -h
+$ prodigal-sc -h
 ```
 
 ### Features

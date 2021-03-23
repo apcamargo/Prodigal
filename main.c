@@ -649,7 +649,7 @@ void usage(char *msg) {
 }
 
 void help() {
-  fprintf(stderr, "\nUsage:  prodigal [-a trans_file] [-c] [-d nuc_file]");
+  fprintf(stderr, "\nUsage:  prodigal-sc [-a trans_file] [-c] [-d nuc_file]");
   fprintf(stderr, " [-f output_type]\n");
   fprintf(stderr, "                 [-g tr_table] [-h] [-i input_file] [-m]");
   fprintf(stderr, " [-n] [-o output_file]\n");

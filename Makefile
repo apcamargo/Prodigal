@@ -24,8 +24,8 @@ CC      = gcc
 CFLAGS  += -pedantic -Wall -O3 -DSUPPORT_GZIP_COMPRESSED
 LFLAGS = -lm $(LDFLAGS) -lz
 
-TARGET  = prodigal
-ZTARGET  = zprodigal
+TARGET  = prodigal-sc
+ZTARGET  = zprodigal-sc
 SOURCES = $(shell echo *.c)
 HEADERS = $(shell echo *.h)
 OBJECTS = $(SOURCES:.c=.o)
